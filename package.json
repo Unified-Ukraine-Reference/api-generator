@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "build": "tsdown",
+    "prepublishOnly": "npm run build",
     "dev": "tsdown --watch"
   },
   "dependencies": {
