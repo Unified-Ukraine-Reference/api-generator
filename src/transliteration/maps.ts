@@ -1,4 +1,4 @@
-const SIMPLE_MAP = {
+export const SIMPLE_MAP = {
   а: 'a',
   б: 'b',
   в: 'v',
@@ -32,12 +32,10 @@ const SIMPLE_MAP = {
   ʼ: '',
 } satisfies Record<string, string>;
 
-const POSITIONAL_MAP = {
+export const POSITIONAL_MAP = {
   є: { start: 'ye', other: 'ie' },
   ї: { start: 'yi', other: 'i' },
   й: { start: 'y', other: 'i' },
   ю: { start: 'yu', other: 'iu' },
   я: { start: 'ya', other: 'ia' },
 } satisfies Record<string, { start: string; other: string }>;
-
-export { SIMPLE_MAP, POSITIONAL_MAP };

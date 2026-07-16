@@ -2,7 +2,7 @@ import { SIMPLE_MAP, POSITIONAL_MAP } from './maps';
 import { isSimple, isPositional } from './guards';
 import { capitalizeWords } from './utils';
 
-function isWordBoundary(prevChar: string | undefined): boolean {
+export function isWordBoundary(prevChar: string | undefined): boolean {
   if (prevChar === undefined) return true;
   return !/[а-щьюяіїєґa-z0-9]/i.test(prevChar);
 }

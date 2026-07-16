@@ -1,4 +1,4 @@
-function capitalizeWords(translit: string): string {
+export function capitalizeWords(translit: string): string {
   return translit
     .split(/(\s|-)/)
     .map((part) => {
@@ -7,5 +7,3 @@ function capitalizeWords(translit: string): string {
     })
     .join('');
 }
-
-export { capitalizeWords };
