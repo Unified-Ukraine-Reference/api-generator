@@ -1,10 +1,18 @@
-import { parseKatottgDataCSV, transformKatottgData } from '../src/katottg';
+import {
+  parseCategoryLocationCSV,
+  parseKatottgDataCSV,
+  transformCategoryLocationData,
+  transformKatottgData,
+} from './katottg';
 
-async function generateKatottgData() {
+export async function generateKatottgData() {
   const parsedLocationArray = await parseKatottgDataCSV();
-  const transformLocationsArray = parsedLocationArray.map(transformKatottgData);
-
-  return transformLocationsArray;
+  return parsedLocationArray.map(transformKatottgData);
 }
 
-export { generateKatottgData };
+export async function generateCategoryLocationData() {
+  const parsedCategoryLocationArray = await parseCategoryLocationCSV();
+  return parsedCategoryLocationArray.map(transformCategoryLocationData);
+}
+
+export type { NewLocationType, NewLocationCategoryType, AllowedLocationCategory } from './katottg';

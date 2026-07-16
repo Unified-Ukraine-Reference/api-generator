@@ -1,4 +1,4 @@
-import type { KatottgColumn } from './types';
+import type { KatottgColumn, LocationCategoryColumn } from './types';
 
 export const KATOTTG_COLUMNS = [
   'firstLevel',
@@ -9,3 +9,9 @@ export const KATOTTG_COLUMNS = [
   'locationCategory',
   'nameCategory',
 ] satisfies KatottgColumn[];
+
+export const LOCATION_CATEGORY_COLUMNS = [
+  'code',
+  'name',
+  'level',
+] satisfies LocationCategoryColumn[];

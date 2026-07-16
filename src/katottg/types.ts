@@ -1,4 +1,5 @@
-type KatottgColumn =
+export type LocationCategoryColumn = 'code' | 'name' | 'level';
+export type KatottgColumn =
   | 'firstLevel'
   | 'secondLevel'
   | 'thirdLevel'
@@ -7,15 +8,20 @@ type KatottgColumn =
   | 'nameCategory'
   | 'locationCategory';
 
-type KatottgColumns = Record<Exclude<KatottgColumn, 'locationCategory'>, string>;
+export type KatottgColumns = Record<Exclude<KatottgColumn, 'locationCategory'>, string>;
+export type LocationCategoryColumns = Record<Exclude<LocationCategoryColumn, 'code'>, string>;
 
-type AllowedLocationCategory = 'O' | 'K' | 'P' | 'H' | 'M' | 'X' | 'C' | 'B';
+export type AllowedLocationCategory = 'O' | 'K' | 'P' | 'H' | 'M' | 'X' | 'C' | 'B';
 
-interface ParsedKatottgData extends KatottgColumns {
+export interface ParsedKatottgData extends KatottgColumns {
   locationCategory: AllowedLocationCategory;
 }
 
-type NewLocationType = {
+export interface ParsedLocationCategoryData extends LocationCategoryColumns {
+  code: AllowedLocationCategory;
+}
+
+export type NewLocationType = {
   code: string;
   nameUa: string;
   nameEn: string;
@@ -23,4 +29,9 @@ type NewLocationType = {
   parentCode?: string | null | undefined;
 };
 
-export type { NewLocationType, ParsedKatottgData, KatottgColumn };
+export type NewLocationCategoryType = {
+  code: string;
+  nameUa: string;
+  nameEn: string;
+  level?: number | null | undefined;
+};

@@ -1,6 +1,11 @@
 import { transliterate } from '../transliteration';
 
-import type { ParsedKatottgData, NewLocationType } from './types';
+import type {
+  ParsedKatottgData,
+  NewLocationType,
+  ParsedLocationCategoryData,
+  NewLocationCategoryType,
+} from './types';
 
 export function transformKatottgData(oldLoc: ParsedKatottgData): NewLocationType {
   const levels = [
@@ -30,5 +35,16 @@ export function transformKatottgData(oldLoc: ParsedKatottgData): NewLocationType
     nameUa: oldLoc.nameCategory,
     nameEn: transliterate(oldLoc.nameCategory),
     categoryCode: oldLoc.locationCategory,
+  };
+}
+
+export function transformCategoryLocationData(
+  oldLoc: ParsedLocationCategoryData
+): NewLocationCategoryType {
+  return {
+    code: oldLoc.code,
+    nameUa: oldLoc.name,
+    nameEn: transliterate(oldLoc.name),
+    level: oldLoc.level ? Number(oldLoc.level) : null,
   };
 }
