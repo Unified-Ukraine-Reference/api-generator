@@ -30,17 +30,27 @@ export class GithubDataClient {
     };
   }
 
+  private getReleaseUrl(): string {
+    if (this.tag === 'latest') {
+      return `https://api.github.com/repos/${this.owner}/${this.repo}/releases/latest`;
+    }
+    return `https://api.github.com/repos/${this.owner}/${this.repo}/releases/tags/${encodeURIComponent(this.tag)}`;
+  }
+
   private async getAssetsMap(): Promise<Map<string, number>> {
     if (this.assetsMapPromise) {
       return this.assetsMapPromise;
     }
 
     this.assetsMapPromise = (async () => {
-      const url = `https://api.github.com/repos/${this.owner}/${this.repo}/releases/${this.tag}`;
+      const url = this.getReleaseUrl();
       const response = await fetchWithRetry(url, { headers: this.getHeaders('json') });
       const release = (await response.json()) as { assets: GithubAsset[] };
       return new Map(release.assets.map((asset: GithubAsset) => [asset.name, asset.id]));
-    })();
+    })().catch((err) => {
+      this.assetsMapPromise = null;
+      throw err;
+    });
 
     return this.assetsMapPromise;
   }
