@@ -4,8 +4,10 @@ import { fetchAndTransform } from './location-reference/utils';
 import { DATA_REGISTRY } from './location-reference/registry';
 import { GithubDataClient } from './github';
 
-export async function Data() {
-  const client = new GithubDataClient();
+import type { GithubDataClientOptions } from './github';
+
+export async function Data(opt?: GithubDataClientOptions) {
+  const client = new GithubDataClient(opt);
   await client.listAssetNames();
 
   const [katottgData, categoryLocationData] = await Promise.all([
