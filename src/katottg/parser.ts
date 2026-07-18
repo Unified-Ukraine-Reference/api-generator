@@ -1,53 +1,72 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { Parser } from 'csv-parse';
+import { Parser, type Options } from 'csv-parse';
+import { Readable } from 'node:stream';
 
-import { KATOTTG_COLUMNS, LOCATION_CATEGORY_COLUMNS } from './constants';
+export class CsvParser<T> {
+  private readonly textCSV: string;
+  private readonly options: Options;
 
-import type { ParsedKatottgData, ParsedLocationCategoryData } from './types';
+  constructor(textCSV: string, options: Options) {
+    this.textCSV = textCSV;
+    this.options = options;
+  }
 
-export function parseKatottgDataCSV(): Promise<ParsedKatottgData[]> {
-  return new Promise((resolve, reject) => {
-    const result: ParsedKatottgData[] = [];
+  async parse(): Promise<T[]> {
+    return new Promise((resolve, reject) => {
+      const result: T[] = [];
+      const stream = Readable.from(this.textCSV);
+      const parser = new Parser(this.options);
 
-    const parser = new Parser({
-      columns: KATOTTG_COLUMNS,
-      skip_empty_lines: true,
+      stream
+        .pipe(parser)
+        .on('data', (row) => result.push(row))
+        .on('end', () => resolve(result))
+        .on('error', (err: Error) => reject(err));
     });
-
-    fs.createReadStream(path.join(process.cwd(), 'public', 'katottg.csv'), 'utf-8')
-      .pipe(parser)
-      .on('data', (row) => {
-        result.push(row);
-      })
-      .on('end', () => {
-        resolve(result);
-      })
-      .on('error', (err: Error) => {
-        reject(err);
-      });
-  });
+  }
 }
 
-export function parseCategoryLocationCSV(): Promise<ParsedLocationCategoryData[]> {
-  return new Promise((resolve, reject) => {
-    const result: ParsedLocationCategoryData[] = [];
+// Export function parseKatottgDataCSV(): Promise<ParsedKatottgData[]> {
+//   Return new Promise((resolve, reject) => {
+//     Const result: ParsedKatottgData[] = [];
 
-    const parser = new Parser({
-      columns: LOCATION_CATEGORY_COLUMNS,
-      skip_empty_lines: true,
-    });
+//     Const parser = new Parser({
+//       Columns: KATOTTG_COLUMNS,
+//       Skip_empty_lines: true,
+//     });
 
-    fs.createReadStream(path.join(process.cwd(), 'public', 'location-category.csv'), 'utf-8')
-      .pipe(parser)
-      .on('data', (row) => {
-        result.push(row);
-      })
-      .on('end', () => {
-        resolve(result);
-      })
-      .on('error', (err: Error) => {
-        reject(err);
-      });
-  });
-}
+//     Fs.createReadStream(path.join(process.cwd(), 'public', 'katottg.csv'), 'utf-8')
+//       .pipe(parser)
+//       .on('data', (row) => {
+//         Result.push(row);
+//       })
+//       .on('end', () => {
+//         Resolve(result);
+//       })
+//       .on('error', (err: Error) => {
+//         Reject(err);
+//       });
+//   });
+// }
+
+// Export function parseCategoryLocationCSV(): Promise<ParsedLocationCategoryData[]> {
+//   Return new Promise((resolve, reject) => {
+//     Const result: ParsedLocationCategoryData[] = [];
+
+//     Const parser = new Parser({
+//       Columns: LOCATION_CATEGORY_COLUMNS,
+//       Skip_empty_lines: true,
+//     });
+
+//     Fs.createReadStream(path.join(process.cwd(), 'public', 'location-category.csv'), 'utf-8')
+//       .pipe(parser)
+//       .on('data', (row) => {
+//         Result.push(row);
+//       })
+//       .on('end', () => {
+//         Resolve(result);
+//       })
+//       .on('error', (err: Error) => {
+//         Reject(err);
+//       });
+//   });
+// }
