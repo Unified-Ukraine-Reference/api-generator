@@ -11,7 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown && cp -r public dist/public",
+    "build": "tsdown",
     "prepublishOnly": "npm run build",
     "dev": "tsdown --watch"
   },

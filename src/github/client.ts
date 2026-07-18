@@ -1,16 +1,6 @@
-import { fetchWithRetry } from './katottg/utils';
+import { fetchWithRetry } from './utils';
 
-interface GithubDataClientOptions {
-  token?: string;
-  owner?: string;
-  repo?: string;
-  tag?: string;
-}
-
-interface GithubAsset {
-  id: number;
-  name: string;
-}
+import type { GithubDataClientOptions, GithubAsset } from './types';
 
 export class GithubDataClient {
   private readonly token?: string;

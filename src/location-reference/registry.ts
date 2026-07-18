@@ -1,5 +1,5 @@
-import { KATOTTG_COLUMNS, LOCATION_CATEGORY_COLUMNS } from './constants';
 import { transformCategoryLocationData, transformKatottgData } from './transformer';
+import { KATOTTG_COLUMNS, LOCATION_CATEGORY_COLUMNS } from './constants';
 
 export const DATA_REGISTRY = {
   katottg: {

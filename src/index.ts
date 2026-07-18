@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
-import { GithubDataClient } from './github-data-client';
-import { DATA_REGISTRY } from './katottg/registry';
-import { fetchAndTransform } from './katottg/utils';
+import { fetchAndTransform } from './location-reference/utils';
+import { DATA_REGISTRY } from './location-reference/registry';
+import { GithubDataClient } from './github';
 
 export async function Data() {
   const client = new GithubDataClient();

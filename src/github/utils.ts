@@ -1,7 +1,3 @@
-import type { GithubDataClient } from '../github-data-client';
-import type { Options } from 'csv-parse';
-import { CsvParser } from './parser';
-
 export async function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -23,16 +19,4 @@ export async function fetchWithRetry(
     throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
   }
   throw new Error('Max retries exceeded');
-}
-
-export async function fetchAndTransform<Parsed, Result>(
-  client: GithubDataClient,
-  assetName: string,
-  columns: NonNullable<Options['columns']>,
-  transform: (row: Parsed) => Result
-) {
-  const csvText = await client.fetchCSV(assetName);
-  const parser = new CsvParser<Parsed>(csvText, { columns, skip_empty_lines: true });
-  const parsed = await parser.parse();
-  return parsed.map(transform);
 }
